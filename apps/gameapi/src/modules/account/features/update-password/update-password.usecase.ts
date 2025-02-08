@@ -2,11 +2,11 @@ import { IUseCase } from "@gameapi/shared/domain/interfaces/usecase.js";
 import { IAccountValidation } from "@gameapi/modules/account/domain/account.validation.js";
 import { IValidation } from "@gameapi/shared/domain/interfaces/validation.js";
 import { UpdatePasswordRequest } from "./update-password.dto.js";
-import { ICryptography } from "@wyd/shared/cryptography/cryptography.cjs";
-import { IQueue } from "@wyd/shared/queue.js";
 import { InvalidPasswordException } from "@gameapi/modules/account/domain/exceptions/invalid-password.exception.js";
 import { AccountNotFoundException } from "@gameapi/modules/account/domain/exceptions/account-not-found.exception.js";
 import { IAccountRepository } from "@gameapi/modules/account/domain/account.repository.js";
+import { ICryptography } from "@wyd/shared/cryptography/cryptography.js";
+import { IQueue } from "@wyd/shared/queue.js";
 
 export class UpdatePasswordUseCase implements IUseCase {
   constructor(

@@ -19,13 +19,14 @@
   ],
   "scripts": {
     "start:dev": "node --watch --import tsx --env-file=.env.dev src/main/index.ts",
+    "start:prod": "node --env-file=.env.prod dist/main/index.js",
     "build": "tsup src --format cjs,esm --dts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wyd/shared": "1.0.0",
+    "@wyd/shared": "workspace:*",
     "ioredis": "^5.5.0",
     "zod": "^3.24.1"
   }

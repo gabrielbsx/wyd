@@ -1,10 +1,10 @@
 import { FileSystemAccountRepository } from "@gameapi/modules/account/data-source/fs-account.repository.js";
-import { Queue } from "@wyd/shared/queue.js";
-import { Cryptography } from "@wyd/shared/cryptography/cryptography.cjs";
 import { env } from "@gameapi/shared/env/index.js";
 import { AccountValidation } from "@gameapi/modules/account/domain/account.validation.js";
 import { UpdatePasswordValidation } from "./update-password.validation.js";
 import { UpdatePasswordUseCase } from "./update-password.usecase.js";
+import { Cryptography } from "@wyd/shared/cryptography/cryptography.js";
+import { Queue } from "@wyd/shared/queue.js";
 
 export function updatePasswordFactory() {
   const repository = new FileSystemAccountRepository();

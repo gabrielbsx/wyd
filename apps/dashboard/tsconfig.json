@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@dashboard/*": ["src/*"]
+    }
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

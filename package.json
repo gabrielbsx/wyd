@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start:gameapi": "pnpm --filter @wyd/gameapi start:dev",
+    "start:gameapi:dev": "pnpm --filter @wyd/gameapi start:dev",
+    "start:gameapi:prod": "pnpm --filter @wyd/gameapi start:prod",
     "build:shared": "pnpm --filter @wyd/shared build",
     "script:generate-keys": "cd scripts && node generate-keys.js",
     "script:encrypt-message": "cd scripts && node encrypt-message.js"

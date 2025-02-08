@@ -2,9 +2,9 @@ import { FileSystemAccountRepository } from "@gameapi/modules/account/data-sourc
 import { CreateAccountUseCase } from "./create-account.usecase.js";
 import { CreateAccountValidation } from "./create-account.validation.js";
 import { Queue } from "@wyd/shared/queue.js";
-import { Cryptography } from "@wyd/shared/cryptography/cryptography.cjs";
 import { env } from "@gameapi/shared/env/index.js";
 import { AccountValidation } from "@gameapi/modules/account/domain/account.validation.js";
+import { Cryptography } from "@wyd/shared/cryptography/cryptography.js";
 
 export function createAccountFactory() {
   const repository = new FileSystemAccountRepository();

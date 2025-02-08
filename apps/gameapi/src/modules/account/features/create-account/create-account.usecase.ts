@@ -1,12 +1,12 @@
 import { IAccountRepository } from "@gameapi/modules/account/domain/account.repository.js";
 import { AccountAlreadyExistsException } from "@gameapi/modules/account/domain/exceptions/account-already-exists.exception.js";
-import { IQueue } from "@wyd/shared/queue.js";
-import { ICryptography } from "@wyd/shared/cryptography/cryptography.cjs";
 import { InvalidPasswordException } from "@gameapi/modules/account/domain/exceptions/invalid-password.exception.js";
 import { IUseCase } from "@gameapi/shared/domain/interfaces/usecase.js";
 import { IValidation } from "@gameapi/shared/domain/interfaces/validation.js";
 import { CreateAccountRequest } from "./create-account.dto.js";
 import { IAccountValidation } from "@gameapi/modules/account/domain/account.validation.js";
+import { ICryptography } from "@wyd/shared/cryptography/cryptography.js";
+import { IQueue } from "@wyd/shared/queue.js";
 
 export class CreateAccountUseCase implements IUseCase {
   constructor(

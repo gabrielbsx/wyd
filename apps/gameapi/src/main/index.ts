@@ -4,4 +4,4 @@ async function main() {
   listenQueue();
 }
 
-await main();
+main();
