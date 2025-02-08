@@ -1,0 +1,10 @@
+_mock
+
+**/node_modules
+**/dist
+**/.env.dev
+**/.env.prod
+**/pnpm-lock.yaml
+**/package-lock.json
+
+/keys/*.pem

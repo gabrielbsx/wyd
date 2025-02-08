@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@gameapi/*": ["./*"],
+      "@wyd/shared/*": ["../../shared/dist/*"]
+    }
+  },
+  "include": ["@types/*.d.ts", "src"]
+}

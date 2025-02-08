@@ -1,0 +1,29 @@
+{
+  "name": "@wyd/shared",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./dist/*"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src --format cjs,esm --dts"
+  },
+  "keywords": [],
+  "author": "gabrielbsx",
+  "license": "ISC",
+  "dependencies": {
+    "ioredis": "^5.5.0"
+  }
+}

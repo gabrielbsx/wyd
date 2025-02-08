@@ -1,0 +1,26 @@
+{
+  "name": "wyd",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start:gameapi": "pnpm --filter @wyd/gameapi start:dev",
+    "build:shared": "pnpm --filter @wyd/shared build",
+    "script:generate-keys": "cd scripts && node generate-keys.js",
+    "script:encrypt-message": "cd scripts && node encrypt-message.js"
+  },
+  "author": "gabrielbsx",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/node": "^22.13.1",
+    "eslint": "^9.20.0",
+    "globals": "^15.14.0",
+    "tsup": "^8.3.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.23.0"
+  }
+}

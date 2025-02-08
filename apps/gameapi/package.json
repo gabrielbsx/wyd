@@ -1,0 +1,32 @@
+{
+  "name": "@wyd/gameapi",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./dist/*"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start:dev": "node --watch --import tsx --env-file=.env.dev src/main/index.ts",
+    "build": "tsup src --format cjs,esm --dts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@wyd/shared": "1.0.0",
+    "ioredis": "^5.5.0",
+    "zod": "^3.24.1"
+  }
+}
