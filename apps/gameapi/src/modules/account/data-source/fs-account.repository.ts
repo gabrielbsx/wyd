@@ -2,6 +2,7 @@ import {
   AccountProps,
   firstAlphabeticOrEtc,
 } from "@gameapi/modules/account/domain/account.js";
+import { IAccountRepository } from "@gameapi/modules/account/domain/account.repository.js";
 import { AccountAlreadyExistsException } from "@gameapi/modules/account/domain/exceptions/account-already-exists.exception.js";
 import { AccountNotFoundException } from "@gameapi/modules/account/domain/exceptions/account-not-found.exception.js";
 import { env } from "@gameapi/shared/env/index.js";
@@ -10,13 +11,7 @@ import { existsSync } from "node:fs";
 import { open } from "node:fs/promises";
 import { join } from "node:path";
 
-export interface IAccountRepository {
-  createAccount: (account: AccountProps) => Promise<void>;
-  findAccountByUsername: (username: string) => Promise<AccountProps>;
-  hasAccountByUsername: (username: string) => Promise<boolean>;
-}
-
-export class AccountRepository implements IAccountRepository {
+export class FileSystemAccountRepository implements IAccountRepository {
   private _getAccountDirectory = (username: string) =>
     join(env.ACCOUNT_DIR, firstAlphabeticOrEtc(username), username);
 
@@ -55,5 +50,17 @@ export class AccountRepository implements IAccountRepository {
       username,
       password,
     };
+  }
+
+  public async updatePassword(username: string, password: string) {
+    const accountFileDirectory = this._getAccountDirectory(username);
+
+    if (!this.hasAccountByUsername(username))
+      throw new AccountNotFoundException(username);
+
+    const accountFileHandle = await open(accountFileDirectory, "w");
+    const passwordBuffer = Buffer.from(password);
+    await accountFileHandle.write(passwordBuffer, 0, password.length, 16);
+    await accountFileHandle.close();
   }
 }

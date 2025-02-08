@@ -1,27 +1,36 @@
-import { IAccountRepository } from "@gameapi/data-source/account.repository.js";
+import { IAccountRepository } from "@gameapi/modules/account/domain/account.repository.js";
 import { AccountAlreadyExistsException } from "@gameapi/modules/account/domain/exceptions/account-already-exists.exception.js";
-import { ICreateAccountValidation } from "./create-account.validation.js";
 import { IQueue } from "@wyd/shared/queue.js";
 import { ICryptography } from "@wyd/shared/cryptography/cryptography.cjs";
-import { isValidPassword } from "@gameapi/modules/account/domain/account.js";
 import { InvalidPasswordException } from "@gameapi/modules/account/domain/exceptions/invalid-password.exception.js";
+import { IUseCase } from "@gameapi/shared/domain/interfaces/usecase.js";
+import { IValidation } from "@gameapi/shared/domain/interfaces/validation.js";
+import { CreateAccountRequest } from "./create-account.dto.js";
+import { IAccountValidation } from "@gameapi/modules/account/domain/account.validation.js";
 
-export interface ICreateAccountUseCase {
-  execute(request: unknown): Promise<void>;
-}
-
-export class CreateAccountUseCase implements ICreateAccountUseCase {
+export class CreateAccountUseCase implements IUseCase {
   constructor(
     private readonly _accountRepository: IAccountRepository,
-    private readonly _createAccountValidation: ICreateAccountValidation,
+    private readonly _createAccountValidation: IValidation<CreateAccountRequest>,
     private readonly _queue: IQueue,
-    private readonly _cryptography: ICryptography
+    private readonly _cryptography: ICryptography,
+    private readonly _accountValidation: IAccountValidation
   ) {}
 
   public async execute(request: unknown) {
     const { username, password } = await this._createAccountValidation.validate(
       request
     );
+
+    const decryptedPassword = await this._cryptography.decrypt(password);
+
+    if (!this._accountValidation.isValidPassword(decryptedPassword)) {
+      await this._queue.publish("create-account/invalid-password", {
+        username,
+      });
+
+      throw new InvalidPasswordException();
+    }
 
     const hasAccount = await this._accountRepository.hasAccountByUsername(
       username
@@ -35,19 +44,9 @@ export class CreateAccountUseCase implements ICreateAccountUseCase {
       throw new AccountAlreadyExistsException(username);
     }
 
-    const passwordDecrypted = await this._cryptography.decrypt(password);
-
-    if (!isValidPassword(passwordDecrypted)) {
-      await this._queue.publish("create-account/invalid-password", {
-        username,
-      });
-
-      throw new InvalidPasswordException();
-    }
-
     await this._accountRepository.createAccount({
       username,
-      password: passwordDecrypted,
+      password: decryptedPassword,
     });
 
     await this._queue.publish("create-account/account-created", { username });
