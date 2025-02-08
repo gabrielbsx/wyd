@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 
 const publicKey = readFileSync("../keys/public.pem");
 
-const message = "specter";
+const message = "password-here";
 
 const encryptedMessage = crypto.publicEncrypt(publicKey, Buffer.from(message));
 
